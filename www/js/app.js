@@ -105,12 +105,22 @@
     (lecture.theoryTables||[]).forEach(t=>{
       html += `<div class="table-title">${t.title}</div><div class="table-card">`;
       t.rows.forEach((r,i)=>{
-        html += `<div class="table-row ${i===0?'head':''}"><div class="c1">${r[0]}</div><div class="c2">${r[1]}</div></div>`;
+        const cells = r.map((cell,ci)=>`<div class="c${ci+1}">${cell}</div>`).join('');
+        html += `<div class="table-row ${i===0?'head':''}">${cells}</div>`;
       });
       html += `</div>`;
     });
     (lecture.theoryFacts||[]).forEach(f=>{
       html += `<div class="fact-card"><div class="fact-q">${f.q}</div><div class="fact-a">${f.a}</div></div>`;
+    });
+    if((lecture.versesWithMeaning||[]).length){
+      html += `<div class="table-title">চর্যাপদের কিছু পদ ও অর্থ</div>`;
+      lecture.versesWithMeaning.forEach(v=>{
+        html += `<div class="fact-card"><div class="fact-q" style="font-style:italic">${v.verse}</div><div class="fact-a"><b>অর্থ:</b> ${v.meaning}</div></div>`;
+      });
+    }
+    (lecture.essayNotes||[]).forEach(e=>{
+      html += `<div class="table-title">${e.title}</div><div class="essay-card">${e.body.replace(/\n/g,'<br><br>')}</div>`;
     });
     body.innerHTML = html || '<div class="empty-state">এই লেকচারের থিওরি নোট শীঘ্রই যুক্ত হবে</div>';
     showScreen('theory');

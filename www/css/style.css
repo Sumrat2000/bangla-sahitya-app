@@ -85,6 +85,8 @@ body{
 .table-row.head{ background:var(--green-bg); font-weight:600; color:var(--green); }
 .table-row .c1{ flex:1.2; color:var(--ink); }
 .table-row .c2{ flex:1; color:var(--ink-soft); text-align:right; }
+.table-row .c3{ flex:1; color:var(--ink-soft); text-align:right; font-size:12px; }
+.essay-card{ background:var(--paper); border:1px solid var(--card-border); border-left:3px solid var(--gold); border-radius:10px; padding:14px 16px; margin-bottom:16px; font-size:13.5px; color:var(--ink); line-height:1.75; text-align:justify; }
 
 /* ---------- MCQ ---------- */
 .mcq-body{ padding:18px 18px 40px; }
