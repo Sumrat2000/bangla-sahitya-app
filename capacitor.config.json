@@ -1,0 +1,9 @@
+{
+  "appId": "com.shahriar.banglasahitya",
+  "appName": "বাংলা সাহিত্য",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
