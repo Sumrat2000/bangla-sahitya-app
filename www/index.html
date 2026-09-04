@@ -246,28 +246,150 @@
     </button>
   </div>
 
-  <!-- ============ EXAM / STATS placeholders ============ -->
+  <!-- ============ EXAM PICKER ============ -->
   <section class="screen" id="screen-exam">
     <div class="topbar">
       <button class="back-btn" data-back="home">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="topbar-title"><div class="h1b">পরীক্ষা</div></div>
+      <div class="topbar-title">
+        <div class="eyebrow">নিজেকে যাচাই করুন</div>
+        <div class="h1b">পরীক্ষা</div>
+      </div>
     </div>
-    <div class="empty-state">শীঘ্রই আসছে</div>
+    <div class="exam-setup">
+      <div class="section-title" style="padding:0 0 10px">লেকচার বাছাই করুন</div>
+      <div class="chip-grid" id="exam-lecture-chips"></div>
+
+      <div class="section-title" style="padding:20px 0 10px">প্রশ্ন সংখ্যা</div>
+      <div class="chip-row" id="exam-count-chips">
+        <button class="chip" data-count="10">১০</button>
+        <button class="chip" data-count="25">২৫</button>
+        <button class="chip" data-count="50">৫০</button>
+        <button class="chip" data-count="0">সবগুলো</button>
+      </div>
+
+      <div class="exam-avail" id="exam-avail"></div>
+      <button class="next-btn" id="exam-start-btn" style="margin-top:22px">পরীক্ষা শুরু করুন</button>
+
+      <div class="section-title" style="padding:28px 0 10px">সাম্প্রতিক পরীক্ষা</div>
+      <div class="list-body" id="exam-history-mini" style="padding:0"></div>
+    </div>
   </section>
 
+  <!-- ============ EXAM SESSION ============ -->
+  <section class="screen" id="screen-exam-session">
+    <div class="topbar">
+      <button class="back-btn" id="exam-exit-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow" id="exam-session-eyebrow">পরীক্ষা</div>
+        <div class="h1b" id="exam-timer">০০:০০</div>
+      </div>
+    </div>
+    <div class="mcq-body">
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill" id="exam-progress-fill"></div></div>
+        <div class="progress-label" id="exam-progress-label">১/১</div>
+      </div>
+      <div class="q-num" id="exam-qnum">প্রশ্ন ১</div>
+      <div class="q-text" id="exam-qtext"></div>
+      <div id="exam-options"></div>
+      <div class="exam-nav-row">
+        <button class="nav-btn" id="exam-prev-btn">পূর্ববর্তী</button>
+        <button class="nav-btn primary" id="exam-next-btn">পরবর্তী</button>
+      </div>
+      <button class="next-btn" id="exam-submit-btn" style="display:none; background:var(--gold); color:#3A2A00;">পরীক্ষা জমা দিন</button>
+    </div>
+  </section>
+
+  <!-- ============ EXAM RESULT ============ -->
+  <section class="screen" id="screen-exam-result">
+    <div class="topbar">
+      <button class="back-btn" data-back="exam">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title"><div class="h1b">ফলাফল</div></div>
+    </div>
+    <div class="result-body">
+      <div class="score-ring-wrap">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--card-border)" stroke-width="14"/>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--green)" stroke-width="14" stroke-linecap="round" id="score-ring-fill" transform="rotate(-90 80 80)"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-pct" id="result-pct">০%</div>
+          <div class="score-sub">স্কোর</div>
+        </div>
+      </div>
+      <div class="result-stat-row">
+        <div class="rstat"><div class="rstat-num" id="result-correct">০</div><div class="rstat-label">সঠিক</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-wrong">০</div><div class="rstat-label">ভুল</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-skip">০</div><div class="rstat-label">বাদ</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-time">০:০০</div><div class="rstat-label">সময়</div></div>
+      </div>
+      <div class="section-title" style="padding:20px 0 10px">উত্তরপত্র পর্যালোচনা</div>
+      <div id="result-review-list"></div>
+      <button class="next-btn" id="result-retry-btn" style="margin-top:10px">আবার পরীক্ষা দিন</button>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
   <section class="screen" id="screen-stats">
     <div class="topbar">
       <button class="back-btn" data-back="home">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="topbar-title"><div class="h1b">পরিসংখ্যান</div></div>
+      <div class="topbar-title">
+        <div class="eyebrow">আপনার ফলাফল</div>
+        <div class="h1b">পরিসংখ্যান</div>
+      </div>
     </div>
-    <div class="empty-state">শীঘ্রই আসছে</div>
+    <div class="stats-body">
+      <div class="stat-card" style="margin:0 0 16px">
+        <div class="stat">
+          <div class="num" id="stat-total-exam">০</div>
+          <div class="unit">পরীক্ষা</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-avg-score">০%</div>
+          <div class="unit">গড় স্কোর</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-best-score">০%</div>
+          <div class="unit">সেরা স্কোর</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="padding:6px 0 10px">প্র্যাকটিস নির্ভুলতা</div>
+      <div class="stat-card" style="margin:0 0 16px">
+        <div class="stat">
+          <div class="num" id="stat-practice-attempted">০</div>
+          <div class="unit">প্রশ্ন করা হয়েছে</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-practice-correct">০</div>
+          <div class="unit">সঠিক উত্তর</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-practice-accuracy">০%</div>
+          <div class="unit">নির্ভুলতা</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="padding:6px 0 10px">লেকচার-ভিত্তিক দক্ষতা</div>
+      <div id="stats-lecture-bars"></div>
+
+      <div class="section-title" style="padding:20px 0 10px">পরীক্ষার ইতিহাস</div>
+      <div id="stats-exam-history"></div>
+
+      <button class="next-btn" id="stats-reset-btn" style="margin-top:20px; background:var(--danger);">সব পরিসংখ্যান মুছে ফেলুন</button>
+    </div>
   </section>
 
 </div>
+
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
