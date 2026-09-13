@@ -29,6 +29,9 @@ jobs:
       - name: Add Android platform (if missing)
         run: npx cap add android || true
 
+      - name: Generate app icons & splash screen
+        run: npx capacitor-assets generate --android
+
       - name: Sync Capacitor
         run: npx cap sync android
 

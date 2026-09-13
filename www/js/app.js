@@ -31,7 +31,7 @@
   }
 
   /* ---------- NAVIGATION ---------- */
-  const SCREEN_IDS = ['home','lectures','theory','mcq-picker','mcq','short-picker','short','timeline','exam','exam-session','exam-result','stats'];
+  const SCREEN_IDS = ['home','lectures','theory','mcq-picker','mcq','short','timeline','exam','exam-session','exam-result','stats'];
   function showScreen(name){
     SCREEN_IDS.forEach(id=>{
       const el = document.getElementById('screen-'+id);
@@ -40,20 +40,38 @@
     if(name==='home') renderHomeStats();
     window.scrollTo(0,0);
   }
+  function navigateTo(name){
+    const cur = SCREEN_IDS.find(id=>{
+      const el = document.getElementById('screen-'+id);
+      return el && el.classList.contains('active');
+    });
+    if(cur !== name) history.pushState({screen:name}, '', '#'+name);
+    showScreen(name);
+  }
+  window.addEventListener('popstate', (e)=>{
+    const overlay = document.getElementById('orbit-overlay');
+    if(overlay.classList.contains('active')){
+      overlay.classList.remove('active');
+      return;
+    }
+    const target = (e.state && e.state.screen) || 'home';
+    showScreen(target);
+  });
+  history.replaceState({screen:'home'}, '', '#home');
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.addEventListener('click', ()=>{
       const target = el.dataset.nav;
       if(target==='lectures') renderLectureList();
       if(target==='mcq-picker') renderPickerList('mcq-picker-list', l=>totalMcq(l)>0, openMcqLecture, 'MCQ');
-      if(target==='short-picker') renderPickerList('short-picker-list', l=>l.theoryFacts.length>0, openShortLecture, 'থিওরি');
+      if(target==='short') renderAllShortQuestions();
       if(target==='timeline') renderTimeline();
       if(target==='exam') renderExamPicker();
       if(target==='stats') renderStats();
-      showScreen(target);
+      navigateTo(target);
     });
   });
   document.querySelectorAll('[data-back]').forEach(el=>{
-    el.addEventListener('click', ()=> showScreen(el.dataset.back));
+    el.addEventListener('click', ()=> history.back());
   });
 
   function totalMcq(lecture){
@@ -77,14 +95,13 @@
   function renderLectureList(){
     const wrap = document.getElementById('lecture-list');
     wrap.innerHTML = LECTURES.map(l=>{
-      const qCount = totalMcq(l);
-      const fCount = l.theoryFacts.length;
-      const status = (qCount>0 || fCount>0) ? (fCount+' থিওরি · '+qCount+' MCQ') : 'শীঘ্রই যুক্ত হবে';
+      const tCount = l.theoryTables.length;
+      const status = tCount>0 ? (toBn(tCount)+' টি টেবিল/নোট') : 'শীঘ্রই যুক্ত হবে';
       return `<div class="list-item" data-open-lecture="${l.id}">
         <div class="li-num">${toBn(l.id)}</div>
         <div class="li-main">
           <div class="li-title">${l.title}</div>
-          <div class="li-sub">${l.era} · ${toBn(status.replace(/\d+/g, m=>m))}</div>
+          <div class="li-sub">${l.era} · ${status}</div>
         </div>
         <div class="li-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
@@ -95,7 +112,7 @@
       el.addEventListener('click', ()=>{
         const lecture = LECTURES.find(l=>l.id==el.dataset.openLecture);
         if(!lecture) return;
-        if(lecture.theoryFacts.length===0 && totalMcq(lecture)===0){
+        if(lecture.theoryTables.length===0 && lecture.essayNotes.length===0){
           alert('এই লেকচারের ডেটা শীঘ্রই যুক্ত হবে।');
           return;
         }
@@ -112,7 +129,7 @@
       return;
     }
     wrap.innerHTML = items.map(l=>{
-      const sub = kind==='MCQ' ? (toBn(totalMcq(l))+' টি প্রশ্ন') : (toBn(l.theoryFacts.length)+' টি তথ্য');
+      const sub = toBn(totalMcq(l))+' টি প্রশ্ন';
       return `<div class="list-item" data-open-lecture="${l.id}">
         <div class="li-num">${toBn(l.id)}</div>
         <div class="li-main">
@@ -132,7 +149,7 @@
     });
   }
 
-  /* ---------- THEORY ---------- */
+  /* ---------- THEORY (reference tables / essays / verses only — no short Q&A, no MCQ) ---------- */
   function openTheory(lecture){
     document.getElementById('theory-eyebrow').textContent = 'লেকচার '+toBn(lecture.id)+' · '+lecture.era;
     const body = document.getElementById('theory-body');
@@ -145,9 +162,6 @@
       });
       html += `</div>`;
     });
-    (lecture.theoryFacts||[]).forEach(f=>{
-      html += `<div class="fact-card"><div class="fact-q">${f.q}</div><div class="fact-a">${f.a}</div></div>`;
-    });
     if((lecture.versesWithMeaning||[]).length){
       html += `<div class="table-title">চর্যাপদের কিছু পদ ও অর্থ</div>`;
       lecture.versesWithMeaning.forEach(v=>{
@@ -158,9 +172,22 @@
       html += `<div class="table-title">${e.title}</div><div class="essay-card">${e.body.replace(/\n/g,'<br><br>')}</div>`;
     });
     body.innerHTML = html || '<div class="empty-state">এই লেকচারের থিওরি নোট শীঘ্রই যুক্ত হবে</div>';
-    showScreen('theory');
+    navigateTo('theory');
   }
-  function openShortLecture(lecture){ openTheory(lecture); document.querySelector('#screen-theory .h1b').textContent='থিওরি নোট'; }
+
+  /* ---------- SHORT QUESTIONS (all lectures combined, one-line Q&A) ---------- */
+  function renderAllShortQuestions(){
+    const body = document.getElementById('short-body');
+    let html = '';
+    LECTURES.forEach(l=>{
+      if(!l.theoryFacts || l.theoryFacts.length===0) return;
+      html += `<div class="table-title">লেকচার ${toBn(l.id)} — ${l.title}</div>`;
+      l.theoryFacts.forEach(f=>{
+        html += `<div class="fact-card"><div class="fact-q">${f.q}</div><div class="fact-a">${f.a}</div></div>`;
+      });
+    });
+    body.innerHTML = html || '<div class="empty-state">এখনো কোনো সংক্ষিপ্ত প্রশ্ন যুক্ত হয়নি</div>';
+  }
 
   /* ---------- MCQ PRACTICE ---------- */
   let currentQuiz = [];
@@ -178,7 +205,7 @@
     currentLectureId = lecture.id;
     document.getElementById('mcq-eyebrow').textContent = 'লেকচার '+toBn(lecture.id);
     if(currentQuiz.length===0){ alert('এই লেকচারের MCQ শীঘ্রই যুক্ত হবে।'); return; }
-    showScreen('mcq');
+    navigateTo('mcq');
     renderQuestion();
   }
 
@@ -253,6 +280,10 @@
     const n = item.facts.length;
     linesEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
+    centerEl.style.transition = 'none';
+    centerEl.style.transform = 'translate(-50%,-50%) scale(0.3)';
+
+    const built = [];
     item.facts.forEach((fact,i)=>{
       const angle = (2*Math.PI*i/n) - Math.PI/2;
       const x = cx + radius*Math.cos(angle);
@@ -260,23 +291,44 @@
 
       const line = document.createElementNS('http://www.w3.org/2000/svg','line');
       line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-      line.setAttribute('x2', x); line.setAttribute('y2', y);
+      line.setAttribute('x2', cx); line.setAttribute('y2', cy);
       line.setAttribute('stroke', 'rgba(184,134,11,0.5)');
       line.setAttribute('stroke-width', '1.5');
       linesEl.appendChild(line);
 
       const chip = document.createElement('div');
       chip.className = 'orbit-chip';
-      chip.style.left = x+'px';
-      chip.style.top = y+'px';
+      chip.style.left = cx+'px';
+      chip.style.top = cy+'px';
+      chip.style.transform = 'translate(-50%,-50%) scale(0.15)';
+      chip.style.opacity = '0';
       chip.textContent = fact;
       stage.appendChild(chip);
+      built.push({chip, line, x, y});
     });
 
+    history.pushState({orbitOpen:true}, '', '#orbit');
     overlay.classList.add('active');
+
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        centerEl.style.transition = 'transform .45s cubic-bezier(.34,1.56,.64,1)';
+        centerEl.style.transform = 'translate(-50%,-50%) scale(1)';
+        built.forEach(({chip,line,x,y}, i)=>{
+          setTimeout(()=>{
+            chip.style.left = x+'px';
+            chip.style.top = y+'px';
+            chip.style.transform = 'translate(-50%,-50%) scale(1)';
+            chip.style.opacity = '1';
+            line.setAttribute('x2', x);
+            line.setAttribute('y2', y);
+          }, 90 + i*70);
+        });
+      });
+    });
   }
-  document.getElementById('orbit-close').addEventListener('click', ()=> overlay.classList.remove('active'));
-  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) overlay.classList.remove('active'); });
+  document.getElementById('orbit-close').addEventListener('click', ()=> history.back());
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) history.back(); });
 
   /* ---------- EXAM PICKER ---------- */
   let examSelectedLectures = new Set();
@@ -360,7 +412,7 @@
     examIndex = 0;
     examStartTime = Date.now();
     document.getElementById('exam-session-eyebrow').textContent = toBn(examQuestions.length)+'টি প্রশ্ন';
-    showScreen('exam-session');
+    navigateTo('exam-session');
     renderExamQuestion();
     startExamTimer();
   });
@@ -407,7 +459,7 @@
   document.getElementById('exam-exit-btn').addEventListener('click', ()=>{
     if(confirm('পরীক্ষা থেকে বের হতে চান? অগ্রগতি সংরক্ষিত হবে না।')){
       clearInterval(examTimerHandle);
-      showScreen('exam');
+      history.back();
     }
   });
   document.getElementById('exam-submit-btn').addEventListener('click', ()=>{
@@ -465,9 +517,9 @@
       return `<div class="review-item"><div class="rv-q">${toBn(i+1)}. ${q.q}</div>${ansHtml}</div>`;
     }).join('');
 
-    showScreen('exam-result');
+    navigateTo('exam-result');
   }
-  document.getElementById('result-retry-btn').addEventListener('click', ()=> showScreen('exam'));
+  document.getElementById('result-retry-btn').addEventListener('click', ()=> history.back());
 
   /* ---------- STATS ---------- */
   function renderStats(){
