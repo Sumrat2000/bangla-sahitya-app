@@ -58,6 +58,24 @@
     showScreen(target);
   });
   history.replaceState({screen:'home'}, '', '#home');
+
+  /* Native Android hardware/gesture back button (Capacitor) — belt-and-suspenders
+     alongside popstate, since this is the reliable hook inside a real compiled APK. */
+  function handleNativeBack(){
+    const overlay = document.getElementById('orbit-overlay');
+    if(overlay.classList.contains('active')){
+      history.back();
+      return;
+    }
+    if(history.state && history.state.screen && history.state.screen !== 'home'){
+      history.back();
+    } else if(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App && window.Capacitor.Plugins.App.exitApp){
+      window.Capacitor.Plugins.App.exitApp();
+    }
+  }
+  if(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App){
+    window.Capacitor.Plugins.App.addListener('backButton', handleNativeBack);
+  }
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.addEventListener('click', ()=>{
       const target = el.dataset.nav;
