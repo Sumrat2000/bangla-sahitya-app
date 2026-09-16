@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>বাংলা সাহিত্য</title>
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="home-header">
+      <button class="icon-btn" aria-label="মেনু" id="btn-menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="home-title">
+        <div class="h1">বাংলা সাহিত্য</div>
+        <div class="sub">শিখুন, অনুশীলন করুন, সফল হন</div>
+      </div>
+      <button class="icon-btn" aria-label="নোটিফিকেশন">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      </button>
+    </div>
+
+    <div class="hero">
+      <div class="hero-text">সাহিত্য মানুষের মনকে করে সুন্দর, চিন্তাকে করে মুক্ত</div>
+      <svg class="hero-illus" width="120" height="100" viewBox="0 0 120 100" fill="none">
+        <rect x="20" y="55" width="80" height="14" rx="2" fill="#2E8B57"/>
+        <rect x="24" y="41" width="72" height="14" rx="2" fill="#F3EBD8"/>
+        <rect x="20" y="27" width="80" height="14" rx="2" fill="#E4C878"/>
+        <line x1="70" y1="10" x2="90" y2="35" stroke="#F3EBD8" stroke-width="3"/>
+        <ellipse cx="88" cy="12" rx="10" ry="4" fill="#F3EBD8" transform="rotate(35 88 12)"/>
+      </svg>
+    </div>
+
+    <div class="progress-head">
+      <div class="section-title">আজকের অগ্রগতি</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat">
+        <div class="icon-wrap" style="background:var(--purple-bg)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4H6.5A2.5 2.5 0 004 6.5v13z"/></svg>
+        </div>
+        <div class="label">পড়া হয়েছে</div>
+        <div class="num" id="stat-lectures">0</div>
+        <div class="unit">লেকচার</div>
+      </div>
+      <div class="stat">
+        <div class="icon-wrap" style="background:var(--orange-bg)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+        </div>
+        <div class="label">প্রশ্ন সমাধান</div>
+        <div class="num" id="stat-mcq">0</div>
+        <div class="unit">টি</div>
+      </div>
+      <div class="stat">
+        <div class="icon-wrap" style="background:var(--blue-bg)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </div>
+        <div class="label">পরীক্ষা দেওয়া</div>
+        <div class="num" id="stat-exam">0</div>
+        <div class="unit">টি</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="g-card" data-nav="eras">
+        <div class="icon-wrap" style="background:var(--purple-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4H6.5A2.5 2.5 0 004 6.5v13z"/></svg>
+        </div>
+        <div class="title">লেকচার</div>
+        <div class="desc">সব লেকচার এক জায়গায়</div>
+      </div>
+      <div class="g-card" data-nav="mcq-picker">
+        <div class="icon-wrap" style="background:var(--green-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2.5 1.8-2.5 3.5"/><circle cx="12" cy="17" r=".3" fill="var(--green)"/></svg>
+        </div>
+        <div class="title">নৈর্ব্যক্তিক প্রশ্ন</div>
+        <div class="desc">MCQ প্রশ্ন ও উত্তর</div>
+      </div>
+      <div class="g-card" data-nav="short">
+        <div class="icon-wrap" style="background:var(--orange-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        </div>
+        <div class="title">সংক্ষিপ্ত প্রশ্ন</div>
+        <div class="desc">সংক্ষিপ্ত প্রশ্ন ও উত্তর</div>
+      </div>
+      <div class="g-card" data-nav="timeline">
+        <div class="icon-wrap" style="background:var(--purple-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <div class="title">টাইমলাইন</div>
+        <div class="desc">সাল অনুযায়ী ঘটনাবলি</div>
+      </div>
+      <div class="g-card" data-nav="exam">
+        <div class="icon-wrap" style="background:var(--blue-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        </div>
+        <div class="title">পরীক্ষা</div>
+        <div class="desc">নিজেকে যাচাই করুন</div>
+      </div>
+      <div class="g-card" data-nav="stats">
+        <div class="icon-wrap" style="background:var(--green-bg)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+        </div>
+        <div class="title">পরিসংখ্যান</div>
+        <div class="desc">আপনার ফলাফল দেখুন</div>
+      </div>
+    </div>
+
+    <div class="quote-card">
+      <div class="quote-mark">&ldquo;</div>
+      <div class="quote-text">পড়াশোনা সেই চাবি, যা স্বপ্নের দরজা খুলে দেয়।</div>
+      <svg width="70" height="70" viewBox="0 0 70 70" style="position:absolute; right:14px; bottom:10px;">
+        <rect x="26" y="45" width="18" height="16" rx="2" fill="#8B5A2B"/>
+        <path d="M35 45 C20 40 20 15 35 5 C50 15 50 40 35 45Z" fill="#3E8E52"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ LECTURE LIST ============ -->
+  <section class="screen" id="screen-lectures">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">বাংলা ভাষা ও সাহিত্য</div>
+        <div class="h1b">সব লেকচার</div>
+      </div>
+    </div>
+    <div class="list-body" id="lecture-list"></div>
+  </section>
+
+  <!-- ============ THEORY ============ -->
+  <section class="screen" id="screen-theory">
+    <div class="topbar">
+      <button class="back-btn" data-back="lectures">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow" id="theory-eyebrow">লেকচার</div>
+        <div class="h1b">থিওরি নোট</div>
+      </div>
+    </div>
+    <div class="theory-body" id="theory-body"></div>
+  </section>
+
+  <!-- ============ MCQ PICKER ============ -->
+  <section class="screen" id="screen-mcq-picker">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">প্র্যাকটিস</div>
+        <div class="h1b">নৈর্ব্যক্তিক প্রশ্ন</div>
+      </div>
+    </div>
+    <div class="list-body" id="mcq-picker-list"></div>
+  </section>
+
+  <!-- ============ MCQ PRACTICE ============ -->
+  <section class="screen" id="screen-mcq">
+    <div class="topbar">
+      <button class="back-btn" data-back="mcq-picker">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow" id="mcq-eyebrow">লেকচার</div>
+        <div class="h1b">MCQ প্র্যাকটিস</div>
+      </div>
+    </div>
+    <div class="mcq-body">
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill" id="mcq-progress-fill"></div></div>
+        <div class="progress-label" id="mcq-progress-label">১/১</div>
+      </div>
+      <div class="q-num" id="mcq-qnum">প্রশ্ন ১</div>
+      <div class="q-text" id="mcq-qtext"></div>
+      <div id="mcq-options"></div>
+      <div class="explain" id="mcq-explain" style="display:none"></div>
+      <button class="next-btn" id="mcq-next" style="display:none">পরবর্তী প্রশ্ন</button>
+    </div>
+  </section>
+
+  <!-- ============ SHORT Q VIEW (all lectures combined) ============ -->
+  <section class="screen" id="screen-short">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">এক নজরে প্রশ্ন-উত্তর</div>
+        <div class="h1b">সংক্ষিপ্ত প্রশ্ন</div>
+      </div>
+    </div>
+    <div class="theory-body" id="short-body"></div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="screen" id="screen-timeline">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">যুগ ও সাল অনুযায়ী</div>
+        <div class="h1b">টাইমলাইন</div>
+      </div>
+    </div>
+    <div class="tl-wrap">
+      <div class="tl-spine"></div>
+      <div class="tl-list" id="timeline-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ ERAS (অধ্যায় entry point) ============ -->
+  <section class="screen" id="screen-eras">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">বাংলা ভাষা ও সাহিত্য</div>
+        <div class="h1b">অধ্যায়</div>
+      </div>
+    </div>
+    <div class="list-body" id="era-list"></div>
+  </section>
+
+  <!-- ============ MEDIEVAL SUBSECTIONS ============ -->
+  <section class="screen" id="screen-medieval-sub">
+    <div class="topbar">
+      <button class="back-btn" data-back="eras">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">১২০১ – ১৮০০</div>
+        <div class="h1b">মধ্যযুগ</div>
+      </div>
+    </div>
+    <div class="list-body" id="medieval-sub-list"></div>
+  </section>
+
+  <!-- ============ AUTHORS LIST (আধুনিক যুগ) ============ -->
+  <section class="screen" id="screen-authors-list">
+    <div class="topbar">
+      <button class="back-btn" data-back="eras">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">১৮০১ – বর্তমান</div>
+        <div class="h1b">আধুনিক যুগ</div>
+      </div>
+    </div>
+    <div class="list-body" id="authors-list"></div>
+  </section>
+
+  <!-- ============ GROUP LIST (পঞ্চপাণ্ডব / অন্যান্য) ============ -->
+  <section class="screen" id="screen-group-list">
+    <div class="topbar">
+      <button class="back-btn" data-back="authors-list">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">আধুনিক যুগ</div>
+        <div class="h1b" id="group-list-title">দল</div>
+      </div>
+    </div>
+    <div class="list-body" id="group-list"></div>
+  </section>
+
+  <!-- ============ PAGER (generic paginated content: era / subsection / author) ============ -->
+  <section class="screen" id="screen-pager">
+    <div class="topbar">
+      <button class="back-btn" id="pager-back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow" id="pager-eyebrow">অধ্যায়</div>
+        <div class="h1b" id="pager-title">শিরোনাম</div>
+      </div>
+    </div>
+    <div class="pager-body" id="pager-body"></div>
+    <div class="pager-nav">
+      <button class="pager-nav-btn" id="pager-prev" aria-label="পূর্ববর্তী">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="pager-dots" id="pager-dots"></div>
+      <button class="pager-nav-btn primary" id="pager-next" aria-label="পরবর্তী">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ WORK SUMMARY OVERLAY ============ -->
+  <div class="sheet-overlay" id="work-overlay">
+    <div class="sheet-card">
+      <button class="sheet-close" id="work-close-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="sheet-title" id="work-title"></div>
+      <div class="sheet-summary" id="work-summary"></div>
+      <div class="sheet-chars-label">প্রধান চরিত্র</div>
+      <div class="sheet-chars" id="work-characters"></div>
+    </div>
+  </div>
+
+  <!-- ============ IMAGE ADD MODAL ============ -->
+  <div class="sheet-overlay" id="image-add-modal">
+    <div class="sheet-card">
+      <button class="sheet-close" id="img-modal-close-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="sheet-title">ছবি যোগ করুন</div>
+      <div class="img-modal-label">১. এই প্রম্পট দিয়ে বাইরে ছবি তৈরি করুন</div>
+      <div class="img-modal-prompt" id="img-modal-prompt"></div>
+      <button class="nav-btn" id="img-copy-prompt-btn">প্রম্পট কপি করুন</button>
+      <div class="img-modal-label" style="margin-top:16px">২. তৈরি করা ছবিটি বেছে নিন</div>
+      <button class="next-btn" id="img-pick-file-btn">গ্যালারি থেকে ছবি বাছুন</button>
+      <input type="file" accept="image/*" id="img-file-input" style="display:none">
+      <input type="hidden" id="img-modal-slotid">
+    </div>
+  </div>
+
+  <!-- ============ TIMELINE ORBIT OVERLAY ============ -->
+  <div class="orbit-overlay" id="orbit-overlay">
+    <div class="orbit-stage" id="orbit-stage">
+      <svg class="orbit-lines" id="orbit-lines"></svg>
+      <div class="orbit-center" id="orbit-center"></div>
+    </div>
+    <button class="orbit-close" id="orbit-close" aria-label="বন্ধ করুন">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <!-- ============ EXAM PICKER ============ -->
+  <section class="screen" id="screen-exam">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">নিজেকে যাচাই করুন</div>
+        <div class="h1b">পরীক্ষা</div>
+      </div>
+    </div>
+    <div class="exam-setup">
+      <div class="section-title" style="padding:0 0 10px">লেকচার বাছাই করুন</div>
+      <div class="chip-grid" id="exam-lecture-chips"></div>
+
+      <div class="section-title" style="padding:20px 0 10px">প্রশ্ন সংখ্যা</div>
+      <div class="chip-row" id="exam-count-chips">
+        <button class="chip" data-count="10">১০</button>
+        <button class="chip" data-count="25">২৫</button>
+        <button class="chip" data-count="50">৫০</button>
+        <button class="chip" data-count="0">সবগুলো</button>
+      </div>
+
+      <div class="exam-avail" id="exam-avail"></div>
+      <button class="next-btn" id="exam-start-btn" style="margin-top:22px">পরীক্ষা শুরু করুন</button>
+
+      <div class="section-title" style="padding:28px 0 10px">সাম্প্রতিক পরীক্ষা</div>
+      <div class="list-body" id="exam-history-mini" style="padding:0"></div>
+    </div>
+  </section>
+
+  <!-- ============ EXAM SESSION ============ -->
+  <section class="screen" id="screen-exam-session">
+    <div class="topbar">
+      <button class="back-btn" id="exam-exit-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow" id="exam-session-eyebrow">পরীক্ষা</div>
+        <div class="h1b" id="exam-timer">০০:০০</div>
+      </div>
+    </div>
+    <div class="mcq-body">
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill" id="exam-progress-fill"></div></div>
+        <div class="progress-label" id="exam-progress-label">১/১</div>
+      </div>
+      <div class="q-num" id="exam-qnum">প্রশ্ন ১</div>
+      <div class="q-text" id="exam-qtext"></div>
+      <div id="exam-options"></div>
+      <div class="exam-nav-row">
+        <button class="nav-btn" id="exam-prev-btn">পূর্ববর্তী</button>
+        <button class="nav-btn primary" id="exam-next-btn">পরবর্তী</button>
+      </div>
+      <button class="next-btn" id="exam-submit-btn" style="display:none; background:var(--gold); color:#3A2A00;">পরীক্ষা জমা দিন</button>
+    </div>
+  </section>
+
+  <!-- ============ EXAM RESULT ============ -->
+  <section class="screen" id="screen-exam-result">
+    <div class="topbar">
+      <button class="back-btn" data-back="exam">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title"><div class="h1b">ফলাফল</div></div>
+    </div>
+    <div class="result-body">
+      <div class="score-ring-wrap">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--card-border)" stroke-width="14"/>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--green)" stroke-width="14" stroke-linecap="round" id="score-ring-fill" transform="rotate(-90 80 80)"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-pct" id="result-pct">০%</div>
+          <div class="score-sub">স্কোর</div>
+        </div>
+      </div>
+      <div class="result-stat-row">
+        <div class="rstat"><div class="rstat-num" id="result-correct">০</div><div class="rstat-label">সঠিক</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-wrong">০</div><div class="rstat-label">ভুল</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-skip">০</div><div class="rstat-label">বাদ</div></div>
+        <div class="rstat"><div class="rstat-num" id="result-time">০:০০</div><div class="rstat-label">সময়</div></div>
+      </div>
+      <div class="section-title" style="padding:20px 0 10px">উত্তরপত্র পর্যালোচনা</div>
+      <div id="result-review-list"></div>
+      <button class="next-btn" id="result-retry-btn" style="margin-top:10px">আবার পরীক্ষা দিন</button>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="screen" id="screen-stats">
+    <div class="topbar">
+      <button class="back-btn" data-back="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="topbar-title">
+        <div class="eyebrow">আপনার ফলাফল</div>
+        <div class="h1b">পরিসংখ্যান</div>
+      </div>
+    </div>
+    <div class="stats-body">
+      <div class="stat-card" style="margin:0 0 16px">
+        <div class="stat">
+          <div class="num" id="stat-total-exam">০</div>
+          <div class="unit">পরীক্ষা</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-avg-score">০%</div>
+          <div class="unit">গড় স্কোর</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-best-score">০%</div>
+          <div class="unit">সেরা স্কোর</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="padding:6px 0 10px">প্র্যাকটিস নির্ভুলতা</div>
+      <div class="stat-card" style="margin:0 0 16px">
+        <div class="stat">
+          <div class="num" id="stat-practice-attempted">০</div>
+          <div class="unit">প্রশ্ন করা হয়েছে</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-practice-correct">০</div>
+          <div class="unit">সঠিক উত্তর</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-practice-accuracy">০%</div>
+          <div class="unit">নির্ভুলতা</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="padding:6px 0 10px">লেকচার-ভিত্তিক দক্ষতা</div>
+      <div id="stats-lecture-bars"></div>
+
+      <div class="section-title" style="padding:20px 0 10px">পরীক্ষার ইতিহাস</div>
+      <div id="stats-exam-history"></div>
+
+      <button class="next-btn" id="stats-reset-btn" style="margin-top:20px; background:var(--danger);">সব পরিসংখ্যান মুছে ফেলুন</button>
+    </div>
+  </section>
+
+</div>
+
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
